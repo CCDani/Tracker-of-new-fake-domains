@@ -22,7 +22,7 @@ Clone this repository to your local machine using the following command:
 
 ```bash
 git clone https://github.com/CCDani/Tracker-of-new-fake-domains.git
-cd new-domains-tracker
+cd Tracker-of-new-fake-domains
 ```
 
 ### 2. Set Up the Virtual Environment
