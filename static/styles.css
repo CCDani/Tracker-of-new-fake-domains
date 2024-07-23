@@ -1,0 +1,232 @@
+@font-face {
+    font-family: 'Cyber-War';
+    src: url('./GODOFWAR.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0 20px;
+}
+
+main {
+    max-width: 800px;
+    padding: 5px 15px 15px 15px;
+    margin: 0 auto;
+    height: 100%;
+    background-color: #dde5e9;
+}
+
+h1 {
+    font-family: 'Cyber-War', Arial, sans-serif;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+select {
+    display: block;
+    margin-bottom: 20px;
+    padding: 5px;
+    width: 100%;
+    max-width: 770px;
+}
+
+/* Estilos para la barra de búsqueda y botón */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#search-bar {
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Añadir margen inferior */
+}
+
+#search-button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#search-button:hover {
+    background-color: #048b1b;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    max-width: 770px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    background-color: white;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Añadir transición para el hover */
+}
+
+#add {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    margin: 10px 0;
+}
+
+#clear, #export, #update {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+/* Estilos hover para los botones */
+#add:hover, #clear:hover, #export:hover, #update:hover {
+    background-color: #048b1b;
+}
+
+textarea {
+    width: 100%;
+    margin: 15px 0;
+    padding: 10px;
+    max-width: 770px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+th {
+    text-align: center;
+}
+
+.checkbox {
+    text-align: center;
+    width: 30px;
+}
+
+button {
+    width: 100%;
+    max-width: 200px;
+    margin: 5px auto;
+    border-radius: 5px;
+}
+
+#domains {
+    height: 400px;
+    overflow: auto;
+    background-color: white;
+    max-width: 770px;
+    margin-top: 20px;
+}
+
+#days {
+    width: 150px;
+    height: 26px;
+}
+
+/* Estilos para el Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+}
+
+.close, .close-export {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus, .close-export:hover, .close-export:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Spinner */
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estilos para el mensaje de conteo de dominios */
+.domain-count {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Estilos para los botones del modal de exportación */
+#export-modal button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#export-modal button:hover {
+    background-color: #048b1b;
+}
+
+#export-simple, #export-whois, #export-extended-whois {
+    width: calc(33% - 10px); /* Ajusta el ancho y el margen */
+    max-width: none;
+    display: inline-block; /* Asegura que se muestren en línea */
+    vertical-align: top; /* Alinea los botones verticalmente */
+}

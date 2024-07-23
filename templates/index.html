@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker of new fake domains</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <main>
+        <header>
+            <h1>Tracker of new fake domains</h1>
+        </header> 
+
+        <label for="dropdown">Select the pattern:</label>
+        <select id="dropdown">
+            {% for pattern in patterns %}
+                <option value="{{ loop.index0 }}" {% if loop.index0 == selected_pattern %}selected{% endif %}>{{ pattern }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Search Bar with Button -->
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search domains">
+            <button id="search-button">Search</button>
+        </div>
+
+        <div id="domains">
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th class="checkbox">Select</th>
+                        <th style="text-align: left;">Domain</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for domain in domains %}
+                <tr>
+                    <td class="checkbox"><input type="checkbox" value="{{ domain }}"></td>
+                    <td>{{ domain }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <button id="add">Add Selected</button>
+        </div>
+
+        <textarea id="results" rows="10" cols="50" placeholder="Selected items will appear here..."></textarea>
+
+        <div>
+            <button id="clear">Clear</button>
+            <button id="export">Export</button>
+            <button id="update">Update database</button>
+            <input type="text" id="days" placeholder="1-4 days">
+        </div>
+    </main>
+
+    <!-- Modal for Progress Indicator -->
+    <div id="progress-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modal-message">Updating database, please wait...</p>
+            <div class="spinner" id="modal-spinner"></div>
+            <button id="modal-accept" style="display:none;">Accept</button>
+        </div>
+    </div>
+
+    <!-- Modal for Export Options -->
+    <div id="export-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-export">&times;</span>
+            <p>Select export option:</p>
+            <button id="export-simple">Simple Export</button>
+            <button id="export-whois">Export with WHOIS</button>
+            <button id="export-extended-whois">Export with Extended WHOIS</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
