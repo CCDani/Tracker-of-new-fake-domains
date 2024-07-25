@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let lastSearch = "";
 
+    // Prevent writing in the results textarea
+    textarea.readOnly = true;
+
     // Modal elements
     const modal = document.getElementById('progress-modal');
     const closeModal = document.getElementsByClassName('close')[0];
@@ -25,6 +28,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const exportSimpleButton = document.getElementById('export-simple');
     const exportWhoisButton = document.getElementById('export-whois');
     const exportExtendedWhoisButton = document.getElementById('export-extended-whois');
+
+    // Loading modal elements
+    const loadingModal = document.getElementById('loading-modal');
 
     // Function to show the modal
     function showModal() {
@@ -73,6 +79,16 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Function to show the loading modal
+    function showLoadingModal() {
+        loadingModal.style.display = 'block';
+    }
+
+    // Function to hide the loading modal
+    function hideLoadingModal() {
+        loadingModal.style.display = 'none';
+    }
+
     dropdown.addEventListener('change', function() {
         const selectedPattern = dropdown.value;
         fetch(`/get_domains?pattern=${selectedPattern}`)
@@ -83,8 +99,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     searchButton.addEventListener('click', function() {
         const query = searchBar.value.trim();
-        if (query === "") {
-            alert("[!]Error, empty field");
+        const forbiddenChars = /[#$%^&*()_]/;
+
+        if (query.length < 3 || forbiddenChars.test(query)) {
+            alert('Search term must be at least 3 characters long and cannot contain # $ % ^ & * ( ) _');
+            return;
         } else {
             lastSearch = query;
             fetch(`/search_domains?query=${query}`)
@@ -137,11 +156,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     exportWhoisButton.addEventListener('click', function() {
+        showLoadingModal();
         generateWhoisTxtFile(false);
         hideExportModal();
     });
 
     exportExtendedWhoisButton.addEventListener('click', function() {
+        showLoadingModal();
         generateWhoisTxtFile(true);
         hideExportModal();
     });
@@ -230,13 +251,17 @@ document.addEventListener("DOMContentLoaded", function() {
                     console.error('Error in response data:', data);
                 }
             }
+            hideLoadingModal(); // Ocultar el modal de carga al finalizar
         })
-        .catch(error => console.error('Error generating WHOIS TXT file:', error));
+        .catch(error => {
+            console.error('Error generating WHOIS data:', error);
+            hideLoadingModal(); // Ocultar el modal de carga en caso de error
+        });
     }
 
-    function downloadFile(filePath, fileName) {
+    function downloadFile(fileUrl, fileName) {
         const link = document.createElement('a');
-        link.href = `/download?file=${encodeURIComponent(filePath)}`;
+        link.href = `/download?file=${encodeURIComponent(fileUrl)}`;
         link.download = fileName;
         link.click();
     }
