@@ -34,7 +34,7 @@ select {
     margin-bottom: 20px;
     padding: 5px;
     width: 100%;
-    max-width: 770px;
+    max-width: 790px;
 }
 
 /* Estilos para la barra de búsqueda y botón */
@@ -73,7 +73,7 @@ select {
 table {
     width: 100%;
     border-collapse: collapse;
-    max-width: 770px;
+    max-width: 790px;
 }
 
 th, td {
@@ -92,31 +92,29 @@ button {
     margin-right: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Añadir transición para el hover */
+    border-radius: 4px; /* Añadir bordes redondeados */
+    background-color: #4CAF50; /* Color de fondo por defecto */
+    color: white; /* Color del texto por defecto */
+    border: 1px solid #ddd; /* Borde */
+}
+
+button:hover {
+    background-color: #048b1b;
 }
 
 #add {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
     margin: 10px 0;
 }
 
-#clear, #export, #update {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-}
-
-/* Estilos hover para los botones */
-#add:hover, #clear:hover, #export:hover, #update:hover {
-    background-color: #048b1b;
+#clear, #export, #update, #days {
+    margin: 5px;
 }
 
 textarea {
     width: 100%;
     margin: 15px 0;
     padding: 10px;
-    max-width: 770px;
+    max-width: 790px;
     box-sizing: border-box;
     resize: none;
 }
@@ -130,6 +128,13 @@ th {
     width: 30px;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    margin: 10px 0;
+}
+
 button {
     width: 100%;
     max-width: 200px;
@@ -141,13 +146,13 @@ button {
     height: 400px;
     overflow: auto;
     background-color: white;
-    max-width: 770px;
+    max-width: 790px;
     margin-top: 20px;
 }
 
 #days {
-    width: 150px;
-    height: 26px;
+    width: px;
+    height: 29px;
 }
 
 /* Estilos para el Modal */
@@ -162,7 +167,7 @@ button {
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
-    padding-top: 60px;
+    padding-top: 300px;
 }
 
 .modal-content {
@@ -194,7 +199,7 @@ button {
     border-radius: 50%;
     width: 60px;
     height: 60px;
-    animation: spin 2s linear infinite;
+    animation: spin 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
 @keyframes spin {
@@ -218,6 +223,9 @@ button {
     margin: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border-radius: 4px; /* Añadir bordes redondeados */
+    width: 100%;
+    max-width: 300px;
 }
 
 #export-modal button:hover {
@@ -225,8 +233,98 @@ button {
 }
 
 #export-simple, #export-whois, #export-extended-whois {
-    width: calc(33% - 10px); /* Ajusta el ancho y el margen */
-    max-width: none;
-    display: inline-block; /* Asegura que se muestren en línea */
-    vertical-align: top; /* Alinea los botones verticalmente */
+    width: 100%;
+    max-width: 200px;
+    display: inline-block;
+    vertical-align: top;
 }
+
+/* Estilos responsivos para móviles */
+@media (max-width: 600px) {
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #export-simple, #export-whois, #export-extended-whois {
+        width: 80%; /* Ajusta el ancho al 80% del contenedor */
+        margin: 5px auto; /* Centra los botones */
+    }
+}
+
+/* Estilos para el Modal de Carga */
+#loading-modal {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+#loading-modal .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+}
+
+#loading-spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estilos para el Modal de Exportación */
+#export-modal .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+}
+
+/* Estilos para los botones de exportación */
+.export-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.export-button:hover {
+    background-color: #048b1b;
+}
+
+/* Estilo para la nota informativa */
+.note {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
+
+
