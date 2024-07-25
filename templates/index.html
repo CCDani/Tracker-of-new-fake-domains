@@ -45,17 +45,17 @@
             </table>
         </div>
 
-        <div>
+        <div class="button-container">
             <button id="add">Add Selected</button>
         </div>
 
         <textarea id="results" rows="10" cols="50" placeholder="Selected items will appear here..."></textarea>
 
-        <div>
+        <div class="button-container">
             <button id="clear">Clear</button>
-            <button id="export">Export</button>
             <button id="update">Update database</button>
-            <input type="text" id="days" placeholder="1-4 days">
+            <button id="export">Export</button>            
+            <input type="text" id="days" placeholder="1-4 days of the database">
         </div>
     </main>
 
@@ -77,8 +77,18 @@
             <button id="export-simple">Simple Export</button>
             <button id="export-whois">Export with WHOIS</button>
             <button id="export-extended-whois">Export with Extended WHOIS</button>
+            <p class="note">Please note: The WHOIS data retrieved by this tool is sourced from the Python WHOIS library and may not always be fully up-to-date.</p>
         </div>
     </div>
+
+        <!-- Modal for Loading Indicator -->
+    <div id="loading-modal" class="modal">
+        <div class="modal-content">
+            <p>Generating file, please wait...</p>
+            <div class="spinner" id="loading-spinner"></div>
+        </div>
+    </div>
+
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
