@@ -180,46 +180,17 @@ def whois_export():
     results = {}
     reliability_results = {}
 
-    def calculate_reliability(w):
-        score = 0
-        status_weight = 0.5
-        expiration_weight = 0.3
-        nameservers_weight = 0.2
-
-        # Evaluar el estado del dominio
-        if w.status:
-            if isinstance(w.status, list):
-                status = " ".join(w.status).lower()
-            else:
-                status = w.status.lower()
-            if 'active' in status:
-                score += 100 * status_weight
-            elif 'inactive' in status or 'pendingdelete' in status:
-                score += 0 * status_weight
-            else:
-                score += 50 * status_weight  # Asignar una puntuación intermedia para otros estados
-
-        # Evaluar la fecha de expiración
-        if w.expiration_date and isinstance(w.expiration_date, list):
-            w.expiration_date = w.expiration_date[0]
-        if w.expiration_date and w.expiration_date > datetime.datetime.now():
-            score += 100 * expiration_weight
+    def check_registration_status(w):
+        if w.domain_name:
+            return "Is already registered"
         else:
-            score += 0 * expiration_weight
-
-        # Evaluar los servidores de nombres
-        if w.name_servers:
-            score += 100 * nameservers_weight
-        else:
-            score += 0 * nameservers_weight
-
-        return score
+            return "Is available\t"
 
     for domain in domains:
         try:
             w = whois.whois(domain)
-            reliability_score = calculate_reliability(w)
-            reliability_results[domain] = reliability_score
+            registration_status = check_registration_status(w)
+            reliability_results[domain] = registration_status
 
             result = f"""
 Registrar: {w.registrar}
@@ -232,24 +203,32 @@ Name Servers: {', '.join(w.name_servers or [])}
             if extended:
                 results[domain] = result
             else:
-                results[domain] = f"{domain}\t\t{reliability_score}%"
+                results[domain] = f"{registration_status}\t{domain}"
         except Exception as e:
-            reliability_results[domain] = "Error"
+            reliability_results[domain] = "Error\t\t"
             if extended:
                 results[domain] = f"Error: {str(e)}"
             else:
-                results[domain] = f"{domain}\t\tError"
+                results[domain] = f"Error\t\t{domain}"
 
     with tempfile.NamedTemporaryFile(delete=False, mode='w', encoding='utf-8', suffix='.txt') as reliability_file:
-        for domain, score in reliability_results.items():
-            reliability_file.write(f"{score}% {domain}\t\t\n")
+        current_pattern = ""
+        for domain, status in reliability_results.items():
+            pattern = get_pattern_from_domain(domain)
+            if pattern != current_pattern:
+                reliability_file.write(f"\n[+]____{pattern}____[+]\n")
+                current_pattern = pattern
+            reliability_file.write(f"{status}\t{domain}\n")
         reliability_file_path = reliability_file.name
 
     with tempfile.NamedTemporaryFile(delete=False, mode='w', encoding='utf-8', suffix='.txt') as whois_file:
+        current_pattern = ""
         for domain, result in results.items():
-            whois_file.write(f"Domain: {domain}\n")
-            whois_file.write(result)
-            whois_file.write("="*40 + "\n")
+            pattern = get_pattern_from_domain(domain)
+            if pattern != current_pattern:
+                whois_file.write(f"\n[+]____{pattern}____[+]\n")
+                current_pattern = pattern
+            whois_file.write(f"Domain: {domain}\n{result}\n{'='*40}\n")
         whois_file_path = whois_file.name
 
     return jsonify({
@@ -264,6 +243,16 @@ def download():
         return send_file(file_path, as_attachment=True)
     else:
         return jsonify({'error': 'File not found'}), 404
+
+def get_pattern_from_domain(domain):
+    patterns = []
+    if os.path.exists(PATTERNS_FILE):
+        with open(PATTERNS_FILE, 'r', encoding='utf-8') as file:
+            patterns.extend([line.strip() for line in file])
+    for pattern in patterns:
+        if pattern.lower() in domain.lower():
+            return pattern
+    return "unknown"
 
 def get_domains_by_pattern(pattern):
     domains = []
