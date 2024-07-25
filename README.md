@@ -9,7 +9,7 @@ This repository aims to provide a tool for searching and filtering newly registe
 - **Search and Filter**: Allows searching and filtering newly registered domains from the last four days.
 - **Domain Selection**: Facilitates the selection of domains of interest for subsequent export.
 - **Simple Export**: Exports the list of selected domains in a simple text format.
-- **Export with WHOIS**: Provides the option to export domains with a reliability percentage based on WHOIS data.
+- **Export with WHOIS**: Provides the option to export domains with a status indicating whether the domain is registered or available, based on WHOIS data.
 - **Extended WHOIS Export**: Offers the option to export the list of domains with detailed WHOIS information.
 
 ## Installation
