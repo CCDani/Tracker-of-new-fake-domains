@@ -60,3 +60,8 @@ python app.py
 
 ### 6. Open in Browser
 Open your web browser and navigate to: http://127.0.0.1:5000
+
+
+
+![image](https://github.com/user-attachments/assets/acc0a098-4c88-48a7-a1e4-f8df1c2f60be)
+
